@@ -1,0 +1,7 @@
+Ứng dụng chat:
+-Đăng kí email -> Gửi mail xác nhận
+-Đăng nhập 
+-Chat (real time)
+-Tạo cuộc trò chuyện
+-Thêm người vào nhóm chat
+

@@ -1,0 +1,11 @@
+.container{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.item{
+   
+    display: inline-block;
+    width: 24%;
+    height: 100vh;
+    vertical-align: top;
+    background-color:#bbdd;
+}

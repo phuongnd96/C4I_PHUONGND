@@ -1,0 +1,25 @@
+
+.container{
+    display: flex;
+}
+.content{
+    flex:1;
+}
+.ads{
+    width: 200px;
+    border: black;
+    height: 700px;
+    background-color: coral;
+}
+.menu{
+    width: 200px;
+    border: black;
+    height: 800px;
+    background-color: blanchedalmond;
+}
+.upper{
+    background-color: gray;
+}
+.lower{
+    background-color: aqua;
+}

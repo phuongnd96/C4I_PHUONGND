@@ -1,0 +1,13 @@
+/* .item{
+    display:inline-block;
+    width:24%;
+    background: #ddbbdd;
+    vertical-align: top;
+} */
+.container{
+    display: flex;
+}
+.item{
+    background: #ddbbdd;
+    vertical-align: top;
+}
