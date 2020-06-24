@@ -1,0 +1,35 @@
+.login-container{
+    /* background: url(../images/login-background.jpg); */
+    background: url(../images/jennie.jpg);
+    height: 100vh;
+    /* Thu nhỏ ảnh lại bằng màn hình */
+    background-size: cover;
+    display: flex;
+    justify-content: flex-end;
+}
+.login-container .login-form{
+    width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    padding: 20px;
+}
+.login-form .title{
+    text-align: center;
+    font-size: 38px;
+    color: #999;
+    font-family: sans-serif;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.login-form .input-wrapper{
+    margin-bottom: 10px;
+}
+.login-form .name-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.login-form .submit-wrapper{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
