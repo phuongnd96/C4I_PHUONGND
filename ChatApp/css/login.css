@@ -1,6 +1,5 @@
 .login-container{
-    /* background: url(../images/login-background.jpg); */
-    background: url(../images/jennie.jpg);
+    background: url(../images/login-background.jpg);
     height: 100vh;
     /* Thu nhỏ ảnh lại bằng màn hình */
     background-size: cover;

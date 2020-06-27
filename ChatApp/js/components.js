@@ -76,3 +76,7 @@ components.loginScreen = `<div class="container">
 </div>
 </div>
 </div>`;
+
+components.chatScreen=`
+<div id="welcome-user"></div>
+`

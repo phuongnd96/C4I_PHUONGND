@@ -18,27 +18,34 @@ controller.register = (registerInfo) => {
   }
   if (registerInfo.password === "") {
     view.showErrorMessage("error-password-name", "Please input password.");
+    return;
   }
   if (registerInfo.confirmPassword === "") {
     view.showErrorMessage(
       "error-confirm-password-name",
       "Please input confirm password."
     );
+    return;
   }
-  view.setActiveScreen("loginScreen");
+  if (registerInfo.confirmPassword != registerInfo.password) {
+    view.showErrorMessage("error-confirm-password-name", "Password not match.");
+  }
+  if(registerInfo.firstName!==""&&registerInfo.lastName!==""
+  &&registerInfo.email!==""){
+    model.register(registerInfo.firstName,registerInfo.lastName,registerInfo.email
+      ,registerInfo.password);
+  }
 };
 controller.validate = (info) => {
-  view.clearErrorMessage([
-    'error-email-name',
-    'error-password-name'
-  ]);
-  if (info.email===""){
-    view.showErrorMessage('error-email-name','Please input email...');
+  view.clearErrorMessage(["error-email-name", "error-password-name"]);
+  if (info.email === "") {
+    view.showErrorMessage("error-email-name", "Please input email...");
   }
-  if (info.password===""){
-    view.showErrorMessage('error-password-name','Please input password...');
+  if (info.password === "") {
+    view.showErrorMessage("error-password-name", "Please input password...");
+  }
+  if (info.email!==""&&info.password!==""){
+    model.login(info.email,info.password);
   }
 };
-controller.authen=(info)=>{
-console.log(info);
-}
+

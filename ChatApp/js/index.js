@@ -1,5 +1,28 @@
-window.onload=()=>{
-    console.log("loaded");
-    view.setActiveScreen('loginScreen');
-    // view.setActiveScreen('registerScreen');
-}
+window.onload = () => {
+  var firebaseConfig = {
+    apiKey: "AIzaSyBeswhwhL39NmOtRiVIXzA_JVLlBJMrVJg",
+    authDomain: "chat-app-d9871.firebaseapp.com",
+    databaseURL: "https://chat-app-d9871.firebaseio.com",
+    projectId: "chat-app-d9871",
+    storageBucket: "chat-app-d9871.appspot.com",
+    messagingSenderId: "794675399694",
+    appId: "1:794675399694:web:04ad6a4cace9850098805f",
+    measurementId: "G-88NS20C6KN",
+  };
+  try {
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    //xác nhận xem user đã login chưa
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user);
+        model.currentUser = user;
+        view.setActiveScreen('chatScreen');
+        return;
+      }
+      view.setActiveScreen("loginScreen");
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};

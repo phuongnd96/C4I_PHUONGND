@@ -1,6 +1,5 @@
 const view = {};
 view.setActiveScreen = (screenName) => {
-  document.getElementById("app").innerHTML = components.welcomeScreen;
   switch (screenName) {
     case "registerScreen":
       document.getElementById("app").innerHTML = components.registerScreen;
@@ -15,8 +14,11 @@ view.setActiveScreen = (screenName) => {
           password: registerForm.password.value,
           confirmPassword: registerForm.confirmPassword.value,
         };
-        console.log(registerInfo);
         controller.register(registerInfo);
+      });
+      const redirectToLogin = document.getElementById("redirect-to-login");
+      redirectToLogin.addEventListener("click", (e) => {
+        view.setActiveScreen("loginScreen");
       });
       break;
 
@@ -31,8 +33,18 @@ view.setActiveScreen = (screenName) => {
           password: loginForm.password.value,
         };
         controller.validate(loginInfo);
-        controller.authen(loginInfo);
       });
+      document
+        .getElementById("redirect-to-register")
+        .addEventListener("click", (e) => {
+          view.setActiveScreen("registerScreen");
+        });
+      break;
+
+    case "chatScreen":
+      document.getElementById("app").innerHTML = components.chatScreen;
+      document.getElementById("welcome-user").innerText = `WELCOME BACK ${model.currentUser.displayName}`;
+      break;
   }
 };
 view.clearErrorMessage = (ids) => {
