@@ -79,4 +79,5 @@ components.loginScreen = `<div class="container">
 
 components.chatScreen=`
 <div id="welcome-user"></div>
+<button id="logout-btn">Log out</button>
 `

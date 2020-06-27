@@ -44,6 +44,9 @@ view.setActiveScreen = (screenName) => {
     case "chatScreen":
       document.getElementById("app").innerHTML = components.chatScreen;
       document.getElementById("welcome-user").innerText = `WELCOME BACK ${model.currentUser.displayName}`;
+      document.getElementById('logout-btn').addEventListener('click',(event)=>{
+          controller.logOut();
+      })
       break;
   }
 };
@@ -58,3 +61,4 @@ view.showErrorMessage = (id, message) => {
     id
   ).style = `font-size:12px; color:red;margin-top:3px`;
 };
+

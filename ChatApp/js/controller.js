@@ -48,4 +48,10 @@ controller.validate = (info) => {
     model.login(info.email,info.password);
   }
 };
-
+controller.logOut=()=>{
+  try {
+    firebase.auth().signOut()
+  } catch (error) {
+    console.log(error);
+  }
+}
