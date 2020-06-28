@@ -9,19 +9,24 @@ window.onload = () => {
     appId: "1:794675399694:web:04ad6a4cace9850098805f",
     measurementId: "G-88NS20C6KN",
   };
-  try {
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    //xác nhận xem user đã login chưa
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user);
-        model.currentUser = user;
-        view.setActiveScreen('chatScreen');
-        return;
-      }
-      view.setActiveScreen("loginScreen");
-    });
+    try {
+    (async()=>{
+      // Initialize Firebase
+    await  firebase.initializeApp(firebaseConfig);
+      //xác nhận xem user đã login chưa
+     await firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log(user);
+          if(user.emailVerified){
+            model.currentUser = user;
+            view.setActiveScreen('chatScreen');
+            return;
+          }
+          view.setActiveScreen("loginScreen");  
+        }
+        view.setActiveScreen("loginScreen");
+      });
+    })();
   } catch (e) {
     console.log(e);
   }
