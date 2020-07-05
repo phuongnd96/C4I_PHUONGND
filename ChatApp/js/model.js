@@ -40,7 +40,7 @@ model.loadConversations = async () => {
     .collection("conversations")
     .get()
     .then((res) => {
-      // Lấy phần từ đầu tiên
+      // Lấy phần tử đầu tiên
       const data = utils.getDataFromDocs(res.docs);
       if (data.length > 0) {
         model.currentConversation = data[0];
@@ -60,6 +60,9 @@ model.addMessage = (msg) => {
     .doc(model.currentConversation.id)
     .update(conversationToUpdate)
     .then((res) => {
-      alert("updated");
-    });
+      console.log(res);
+    })
+    .catch(error=>{
+      console.log(error)
+    })
 };
