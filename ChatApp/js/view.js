@@ -43,10 +43,30 @@ view.setActiveScreen = (screenName) => {
 
     case "chatScreen":
       document.getElementById("app").innerHTML = components.chatScreen;
-      document.getElementById("welcome-user").innerText = `WELCOME BACK ${model.currentUser.displayName}`;
-      document.getElementById('logout-btn').addEventListener('click',(event)=>{
-          controller.logOut();
-      })
+      const sendMessageForm = document.querySelector("#sendMessageForm");
+      sendMessageForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // message chính là name đặt cho thẻ input
+        const now=new Date();
+        const message = {
+          owner: model.currentUser.email,
+          content: sendMessageForm.message.value,
+          createdAt:now.toISOString()
+        };
+        const messageFromBot = {
+          owner: "Bot",
+          content: sendMessageForm.message.value,
+        };
+        if (sendMessageForm.message.value.trim() !== "") {
+          console.log(message)
+          // thêm tin nhắn trên màn hình
+          view.addMessage(message);
+          // thêm vào database
+          controller.addMessageToDataBase(message);
+        }
+        sendMessageForm.message.value = "";
+      });
+      model.loadConversations();
       break;
   }
 };
@@ -61,4 +81,25 @@ view.showErrorMessage = (id, message) => {
     id
   ).style = `font-size:12px; color:red;margin-top:3px`;
 };
-
+view.addMessage = (message) => {
+  const messageWrapper = document.createElement("div");
+  messageWrapper.classList.add("message");
+  if (model.currentUser.email === message.owner) {
+    messageWrapper.classList.add("mine");
+    messageWrapper.innerHTML = `<div class="content"> ${message.content} </div>`;
+  } else {
+    messageWrapper.classList.add("their");
+    messageWrapper.innerHTML = `
+  <div>${message.owner}</div>
+  <div class="content"> ${message.content} </div>`;
+  }
+  // document.querySelector('.list-message').appendChild(messageWrapper);
+  const listMessage = document.querySelector(".list-message");
+  listMessage.appendChild(messageWrapper);
+  listMessage.scrollTop = listMessage.scrollHeight;
+};
+view.showCurrentConversation = () => {
+  for (let oneMessage of model.currentConversation.messages) {
+    view.addMessage(oneMessage);
+  }
+};

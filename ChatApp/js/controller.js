@@ -55,3 +55,6 @@ controller.logOut=()=>{
     console.log(error);
   }
 }
+controller.addMessageToDataBase=(msg)=>{
+  model.addMessage(msg);
+}
