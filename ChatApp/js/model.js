@@ -1,6 +1,7 @@
 const model = {};
 model.currentUser = undefined;
 model.currentConversation = undefined;
+model.collectionName = "conversations";
 model.register = async (firstName, lastName, email, pasword) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, pasword);
@@ -46,13 +47,13 @@ model.loadConversations = async () => {
         model.currentConversation = data[0];
         view.showCurrentConversation();
       }
-      console.log(data);
+      // console.log(data);
     });
 };
 
 model.addMessage = (msg) => {
   const conversationToUpdate = {
-      messages:firebase.firestore.FieldValue.arrayUnion(msg)
+    messages: firebase.firestore.FieldValue.arrayUnion(msg),
   };
   firebase
     .firestore()
@@ -60,9 +61,34 @@ model.addMessage = (msg) => {
     .doc(model.currentConversation.id)
     .update(conversationToUpdate)
     .then((res) => {
-      console.log(res);
+      console.log("updated");
     })
-    .catch(error=>{
-      console.log(error)
-    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+model.listenConversationsChange = () => {
+  let isFirstRun = false;
+  firebase
+    .firestore()
+    .collection(model.collectionName)
+    .where("users", "array-contains", model.currentUser.email)
+    .onSnapshot((res) => {
+      if (!isFirstRun) {
+        isFirstRun = true;
+        return;
+      }
+      const docChanges = res.docChanges();
+      console.log(docChanges);
+      for (oneChange of docChanges) {
+        const type = oneChange.type;
+        const oneChangeData = utils.getDataFromDoc(oneChange.doc);
+        console.log(oneChangeData);
+        if (oneChangeData.id === model.currentConversation.id) {
+          model.currentConversation=oneChangeData
+          view.addMessage(oneChangeData.messages[oneChangeData.messages.length-1])
+        }
+      }
+    });
 };

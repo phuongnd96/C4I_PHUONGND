@@ -58,15 +58,17 @@ view.setActiveScreen = (screenName) => {
           content: sendMessageForm.message.value,
         };
         if (sendMessageForm.message.value.trim() !== "") {
-          console.log(message)
+          // console.log(message)
           // thêm tin nhắn trên màn hình
-          view.addMessage(message);
+          // view.addMessage(message);
+          model.addMessage(message);
           // thêm vào database
-          controller.addMessageToDataBase(message);
+          // controller.addMessageToDataBase(message);
         }
         sendMessageForm.message.value = "";
       });
       model.loadConversations();
+      model.listenConversationsChange();
       break;
   }
 };
