@@ -2,6 +2,7 @@ const model = {};
 model.currentUser = undefined;
 model.currentConversation = undefined;
 model.collectionName = "conversations";
+model.conversations=undefined;
 model.register = async (firstName, lastName, email, pasword) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, pasword);
@@ -43,10 +44,12 @@ model.loadConversations = async () => {
     .then((res) => {
       // Lấy phần tử đầu tiên
       const data = utils.getDataFromDocs(res.docs);
+      model.conversations=data;
       if (data.length > 0) {
         model.currentConversation = data[0];
         view.showCurrentConversation();
       }
+      view.showConversations();
       // console.log(data);
     });
 };
@@ -85,10 +88,20 @@ model.listenConversationsChange = () => {
         const type = oneChange.type;
         const oneChangeData = utils.getDataFromDoc(oneChange.doc);
         console.log(oneChangeData);
-        if (oneChangeData.id === model.currentConversation.id) {
-          model.currentConversation=oneChangeData
-          view.addMessage(oneChangeData.messages[oneChangeData.messages.length-1])
+        if (type==='modified'){
+          if (oneChangeData.id === model.currentConversation.id) {
+            model.currentConversation=oneChangeData
+            view.addMessage(oneChangeData.messages[oneChangeData.messages.length-1])
+          }
         }
+        //Sau khi thêm mới message, update dữ liệu của model.conversations cho giống với dữ liệu trên firbase
+        for (let i=0;i<model.conversations.length;i++){
+          const element=model.conversations[i];
+          if (element.id===oneChangeData.id){
+            model.conversations[i]=oneChangeData;
+          }
+        }
+        console.log(model.conversations)
       }
     });
 };
