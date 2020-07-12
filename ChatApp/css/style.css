@@ -5,6 +5,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+.header {
+    background: #3a7fcf;
+    color: #ffffff;
+    text-align: center;
+    height: 64px;
+    font-size: 24px;
+    line-height: 64px;
+  }
 .input-wrapper input{
     width: 100%;
     padding: 10px 13px;

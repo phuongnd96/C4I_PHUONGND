@@ -57,4 +57,21 @@ controller.logOut=()=>{
 }
 controller.addMessageToDataBase=(msg)=>{
   model.addMessage(msg);
+};
+controller.createConversation=({title,friendEmail})=>{
+  view.clearErrorMessage(['conversation-name-error','conversation-email-error'])
+if (title===''){
+  view.showErrorMessage('conversation-name-error','Please input conversation title');
+}
+console.log(friendEmail)
+if (friendEmail===''){
+  view.showErrorMessage('conversation-email-error',`Please input ally's email`);
+}
+console.log(model.currentConversation)
+model.createConversation({
+  title
+  ,users:[friendEmail,model.currentUser.email]
+  ,createdAt:new Date().toISOString()
+  ,messages:[]
+})
 }

@@ -4,13 +4,8 @@
     height: calc(100vh - 64px);
     display: flex;
 }
-.chat-header {
-  background: #3a7fcf;
-  color: #ffffff;
-  text-align: center;
-  height: 64px;
-  font-size: 24px;
-  line-height: 64px;
+.aside-left {
+    overflow-y: scroll;
 }
 
 .chat-container .main{
@@ -75,8 +70,12 @@
     display: flex;
     justify-content: flex-end;
 }
-.chat-container .aside-right{
+.chat-container .aside-left{
     border-right: 1px solid #dbdbdb;
+    font-size:14px;
+    width: 15%;
+    
+    
 }
 .chat-container .conversation{
     padding: 10px;
@@ -84,4 +83,19 @@
 .chat-container .conversation.current{
     background: #dbdbdb;
 }
+#add-new-conversation{
+    padding: 10px;
+}
 
+.chat-container .aside-left .new-conversation{
+    text-align: center;
+    height: 64px;
+    line-height: 64px;
+    border-bottom: 1px solid #dbdbdb;
+
+}
+.aside-right{
+    border-left: 1px solid #dbdbdb;
+    width: 15%;
+    overflow-wrap: break-word;
+}

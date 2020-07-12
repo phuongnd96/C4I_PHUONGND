@@ -47,6 +47,7 @@ model.loadConversations = async () => {
       model.conversations=data;
       if (data.length > 0) {
         model.currentConversation = data[0];
+        // console.log(model.currentConversation)
         view.showCurrentConversation();
       }
       view.showConversations();
@@ -94,6 +95,11 @@ model.listenConversationsChange = () => {
             view.addMessage(oneChangeData.messages[oneChangeData.messages.length-1])
           }
         }
+        else if(type==='added'){
+          model.conversations.push(oneChangeData);
+          view.addConversation(oneChangeData); 
+
+        }
         //Sau khi thêm mới message, update dữ liệu của model.conversations cho giống với dữ liệu trên firbase
         for (let i=0;i<model.conversations.length;i++){
           const element=model.conversations[i];
@@ -105,3 +111,23 @@ model.listenConversationsChange = () => {
       }
     });
 };
+model.changeCurrentConversation=(conversationId)=>{
+  // console.log('1')
+for (const conversation of model.conversations) {
+  if (conversation.id===conversationId){
+    model.currentConversation=conversation;
+  }
+};
+view.showCurrentConversation();
+}
+model.createConversation=(conversation)=>{
+  console.log(conversation)
+  if (utils.checkEmailFormat(conversation.users[0])){
+    firebase.firestore().collection(model.collectionName).add(conversation)
+    .then((res)=>{
+    })
+    view.backToChatScreen();
+
+  }
+
+}
