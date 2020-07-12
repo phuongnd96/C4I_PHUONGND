@@ -176,7 +176,7 @@ ${conversation.title}
 </div>
 <div class="conversation-num-users">${conversation.users.length} users</div>
   `;
-  conversationWrapper.addEventListener('click', () => {
+  conversationWrapper.addEventListener('mouseover', () => {
     document.querySelector('.current').classList.remove('current');
     conversationWrapper.classList.add('current');
     
