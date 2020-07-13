@@ -2,7 +2,7 @@ const model = {};
 model.currentUser = undefined;
 model.currentConversation = undefined;
 model.collectionName = "conversations";
-model.conversations=undefined;
+model.conversations = undefined;
 model.register = async (firstName, lastName, email, pasword) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, pasword);
@@ -40,11 +40,12 @@ model.loadConversations = async () => {
   firebase
     .firestore()
     .collection("conversations")
+    .where("users", "array-contains", model.currentUser.email)
     .get()
     .then((res) => {
       // Lấy phần tử đầu tiên
       const data = utils.getDataFromDocs(res.docs);
-      model.conversations=data;
+      model.conversations = data;
       if (data.length > 0) {
         model.currentConversation = data[0];
         // console.log(model.currentConversation)
@@ -89,43 +90,44 @@ model.listenConversationsChange = () => {
         const type = oneChange.type;
         const oneChangeData = utils.getDataFromDoc(oneChange.doc);
         console.log(oneChangeData);
-        if (type==='modified'){
+        if (type === 'modified') {
           if (oneChangeData.id === model.currentConversation.id) {
-            model.currentConversation=oneChangeData
-            view.addMessage(oneChangeData.messages[oneChangeData.messages.length-1])
+            model.currentConversation = oneChangeData
+            view.addMessage(oneChangeData.messages[oneChangeData.messages.length - 1])
+          }
+          for (let i = 0; i < model.conversations.length; i++) {
+            const element = model.conversations[i];
+            if (element.id === oneChangeData.id) {
+              model.conversations[i] = oneChangeData;
+            }
           }
         }
-        else if(type==='added'){
+        else if (type === 'added') {
           model.conversations.push(oneChangeData);
-          view.addConversation(oneChangeData); 
+          view.addConversation(oneChangeData);
 
         }
         //Sau khi thêm mới message, update dữ liệu của model.conversations cho giống với dữ liệu trên firbase
-        for (let i=0;i<model.conversations.length;i++){
-          const element=model.conversations[i];
-          if (element.id===oneChangeData.id){
-            model.conversations[i]=oneChangeData;
-          }
-        }
+
         console.log(model.conversations)
       }
     });
 };
-model.changeCurrentConversation=(conversationId)=>{
+model.changeCurrentConversation = (conversationId) => {
   // console.log('1')
-for (const conversation of model.conversations) {
-  if (conversation.id===conversationId){
-    model.currentConversation=conversation;
-  }
-};
-view.showCurrentConversation();
+  for (const conversation of model.conversations) {
+    if (conversation.id === conversationId) {
+      model.currentConversation = conversation;
+    }
+  };
+  view.showCurrentConversation();
 }
-model.createConversation=(conversation)=>{
+model.createConversation = (conversation) => {
   console.log(conversation)
-  if (utils.checkEmailFormat(conversation.users[0])){
+  if (utils.checkEmailFormat(conversation.users[0])) {
     firebase.firestore().collection(model.collectionName).add(conversation)
-    .then((res)=>{
-    })
+      .then((res) => {
+      })
     view.backToChatScreen();
 
   }

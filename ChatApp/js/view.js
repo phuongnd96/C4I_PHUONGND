@@ -151,7 +151,7 @@ view.showCurrentConversation = () => {
   const chatTitle=document.querySelector('#app > div.chat-container > div.main > div > div.conversation-title');
   chatTitle.innerHTML=model.currentConversation.title;
   const conversationDetail=document.querySelector('.aside-right .conversation-detail');
-  console.log(conversationDetail)
+  // console.log(conversationDetail)
   let users=model.currentConversation.users.join().replace(/,/,"<br>")
   conversationDetail.innerHTML=users;
   document.querySelector('.list-message').innerHTML = "";
